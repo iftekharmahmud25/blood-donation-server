@@ -27,26 +27,34 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
-  
-    const donorCollection = client.db('donorDb').collection('donor');
 
+    const donorCollection = client.db("donorDb").collection("donor");
+    const feedbackCollection = client.db("feedbackDb").collection("feedback")
+    const patientCollection = client.db("patientDb").collection("patient")
 
-
-    app.post('/donor',async(req,res)=>{
+    app.post("/donor", async (req, res) => {
       const newDonor = req.body;
       console.log(newDonor);
       const result = await donorCollection.insertOne(newDonor);
-      res.send(result)
+      res.send(result);  
+    });
+    
+
+    app.post("/feedback", async (req,res) =>{
+       const newFeedback = req.body;
+       console.log(newFeedback);
+       const result = await feedbackCollection.insertOne(newFeedback);
+       res.send(result)
+    })
+
+    app.post("/patient",async(req,res)=>{
+       const newPatient = req.body;
+       console.log(newPatient)
+       const result = await patientCollection.insertOne(newPatient);
+       res.send(result)
     })
 
 
-
-
-
-
-
-
-   
 
     await client.db("admin").command({ ping: 1 });
     console.log(
@@ -58,6 +66,42 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+
+
+/// for feedback
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.get("/", (req, res) => {
   res.send("blood donation is running");

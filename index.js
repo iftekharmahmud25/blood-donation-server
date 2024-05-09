@@ -47,6 +47,12 @@ async function run() {
        res.send(result)
     })
 
+    app.get("/feedback",async (req,res) =>{
+       const cursor = feedbackCollection.find();
+       const result = await cursor.toArray();
+       res.send(result)
+    })
+
     app.post("/patient",async(req,res)=>{
        const newPatient = req.body;
        console.log(newPatient)
